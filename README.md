@@ -46,3 +46,7 @@
 [] - Configurando o arquivo cypress.json para atender ao relatório a ser gerado;
 
 [] - Criando o arquivo de configuração para o relatório, no reporter-config.json;# semana-agilizei-02
+
+## Caminho para visualizar o relatório após o CI ter executado
+
+https://dicomonteiro.github.io/semana-agilizei-02/
