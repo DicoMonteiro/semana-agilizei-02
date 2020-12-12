@@ -1,0 +1,107 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2020-12-12T15:35:47.630Z",
+    "end": "2020-12-12T15:36:05.403Z",
+    "duration": 17773,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "8b6efa43-b2bb-464f-ad5c-ed4cdaa39f4d",
+      "title": "",
+      "fullFile": "cypress/integration/compra.spec.js",
+      "file": "cypress/integration/compra.spec.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "e7d13d88-99a7-4604-ae5f-028ea52e83c8",
+          "title": "Compra",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Efetuar uma compra de produto",
+              "fullTitle": "Compra Efetuar uma compra de produto",
+              "timedOut": null,
+              "duration": 17737,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Técnica de backgroundlogin parajá iniciar um cenário já logado, sem precisar ficar logando\n// cy.setCookie(\n//     'PrestaShop-a30a9934ef476d11b6cc3c983616e364',\n//     'R6xmma6F4U6edNQuu67M0h9CvHWYdGE7QEQu30dhvdkFmUq7IYfk1qexa7Q%2BIKakCmVS59HzwdVaubv4m6Sq8n7MYZg3Pr6fmEudR677eH%2B1iwYZomASG3dIzTMYB%2BOGrYVvKjaxy4pabuGcoEp7ySjL6CK0svI6C2Q0vDwUa80csm7QckUZY5p4QT3ac%2FU4elkRXenXnKGbUtEcC7v4WiawkFsxvpMENtd%2BCRLVgeRj6i9fGmeQsg96xdxONObsJ3Rhrms8oBUb1ny6X3Lg%2BVYT%2FkbogHTV6fHgSEB8bsxRnsNWZOtJ0p%2Fi%2F2vg%2F5UnFWbDnN6fs3YL0ejRwhhNjkGKA5PrWm1IPomGKyiKQM%2FwzqjJ56T02VYWVHZ3h2KimnRxzkEiqUuO%2BtltVpDOEkmVBZZu1zCEht2UyN25h5g%3D000314' \n// )\ncy.backgroundLogin(); // O endereço de URL é pegado do campo baseURL dentro do arquivo cypress.json\ncy.visit('/'); // cy.pause()\nvar nomeProduto = 'Faded Short Sleeve T-shirts';\ncy.contains(nomeProduto).trigger('mouseover');\ncy.contains(nomeProduto).parent() // h5\n.siblings('div.button-container') // p e divs\n.children('a') // filhos\n.first() // add to cart\n.click(); // Validndo se o produto foi adicionado ao carrinho com sucesso\ncy.get('.icon-ok').parent() // h2\n.should('contain.text', 'Product successfully added to your shopping cart');\ncy.get('span#layer_cart_product_title').should('contain.text', nomeProduto); // Interrompendo o fluxo\n// cy.pause()\n// Seguindo para confirmar os dados da comprar e dados de login\ncy.get(\".button-container a[href$='controller=order']\").click();\ncy.get(\".cart_navigation a[href$='order&step=1']\").click(); // Autenticar o usuário\n// cy.get('#email').type('semana-qa-cypress@mail.com')\n// cy.get('#passwd').type('Apolo2017')\n// cy.get('#SubmitLogin').click()\n// Validando se o endereço de entrega é igual o de cobrança\n//[type=checkbox]#addressesAreEquals\n// Nós teremos 3 parametros: asserção |  atributo | valor\ncy.get('[type=checkbox]#addressesAreEquals').should('have.attr', 'checked', 'checked');\ncy.get('[type=checkbox]#addressesAreEquals').should('have.attr', 'name', 'same'); // cy.pause()\n// Seguindo na conclusão da comprar\ncy.get('button[name=processAddress]').click();\ncy.get('[type=checkbox]#cgv').check();\ncy.get('button[name=\"processCarrier\"]').click();\ncy.get('.bankwire').click();\ncy.get('.cart_navigation button[type=submit]').find('span').contains('I confirm my order').click();\ncy.get('.cheque-indent strong').should('contain.text', 'Your order on My Store is complete.'); // Usando o método invoke para invocar uma function JS\n// No caso ele irá invocar um texto dentro do elemento div.box\n// usando o then para passar para frente o valor dos textos dentro do elemento div.box\ncy.get('div.box').invoke('text').then(function (text) {\n  console.log(text); // Usando expressão regular para obter os valores requerentes de um determinado conjunto de dados\n  console.log(text.match(/[A-Z][A-Z]+/g)[1]); // 0 -> RTP\n  // 1 -> ID do pedido\n  // escrita de um arquivo json com o conteúdo do pedido\n  // Dois parametros: caminho do arquivo(sempre a partir do root do projeto) | conteúdo do arquivo\n  cy.writeFile('cypress/fixtures/pedido.json', {\n    id: \"\".concat(text.match(/[A-Z][A-Z]+/g)[1])\n  });\n});\ncy.get(\".cart_navigation a[href$='history']\").click(); // leitura de um arquivo\ncy.readFile('cypress/fixtures/pedido.json').then(function (pedido) {\n  cy.get('tr.first_item .history_link a').should('contain.text', pedido.id);\n}); // [x] 1 - capturar o texto do box\n// [x] 2 - filtrar o texto do box para extrair somente o ID do pedido\n// [x] 3 - armazenar o ID do pedidode alguma forma\n// [x] 4 - obter o ID do pedido armazenado de alguma forma\n// Formas de verificação\n// expect\n// should",
+              "err": {},
+              "uuid": "0c69ac12-58fa-4a9c-8815-7985886349eb",
+              "parentUUID": "e7d13d88-99a7-4604-ae5f-028ea52e83c8",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "0c69ac12-58fa-4a9c-8815-7985886349eb"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 17737,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": true,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.2.1"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "mochawesome-report",
+        "quiet": true,
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "5.1.0"
+    }
+  }
+}
