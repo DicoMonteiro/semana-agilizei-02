@@ -5,9 +5,9 @@
     "passes": 0,
     "pending": 0,
     "failures": 1,
-    "start": "2021-08-11T13:59:22.090Z",
-    "end": "2021-08-11T13:59:34.837Z",
-    "duration": 12747,
+    "start": "2022-01-15T21:40:03.186Z",
+    "end": "2022-01-15T21:40:16.656Z",
+    "duration": 13470,
     "testsRegistered": 1,
     "passPercent": 0,
     "pendingPercent": 0,
@@ -18,7 +18,7 @@
   },
   "results": [
     {
-      "uuid": "821e9ade-d3fe-4722-bc26-4dea5d747e0e",
+      "uuid": "eeedf39f-3cbd-4410-a479-24aa21fcd292",
       "title": "",
       "fullFile": "cypress/integration/compra.spec.js",
       "file": "cypress/integration/compra.spec.js",
@@ -27,7 +27,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "913076dd-2b70-48dd-9400-17e0ccd32f3a",
+          "uuid": "e0e71aee-ddf7-4df2-b550-3646040a1cf4",
           "title": "Compra",
           "fullFile": "",
           "file": "",
@@ -38,7 +38,7 @@
               "title": "Efetuar uma compra de produto",
               "fullTitle": "Compra Efetuar uma compra de produto",
               "timedOut": null,
-              "duration": 12656,
+              "duration": 13402,
               "state": "failed",
               "speed": null,
               "pass": false,
@@ -51,8 +51,8 @@
                 "estack": "AssertionError: Timed out retrying: Expected to find element: `[type=checkbox]#addressesAreEquals`, but never found it.\n    at Context.eval (http://automationpractice.com/__cypress/tests?p=cypress/integration/compra.spec.js:134:50)",
                 "diff": null
               },
-              "uuid": "8dbfb0ab-0867-4dd0-944f-f08b442a485d",
-              "parentUUID": "913076dd-2b70-48dd-9400-17e0ccd32f3a",
+              "uuid": "3d4d1c04-e955-4b36-ad3f-d2e7fb3ae66a",
+              "parentUUID": "e0e71aee-ddf7-4df2-b550-3646040a1cf4",
               "isHook": false,
               "skipped": false
             }
@@ -60,11 +60,11 @@
           "suites": [],
           "passes": [],
           "failures": [
-            "8dbfb0ab-0867-4dd0-944f-f08b442a485d"
+            "3d4d1c04-e955-4b36-ad3f-d2e7fb3ae66a"
           ],
           "pending": [],
           "skipped": [],
-          "duration": 12656,
+          "duration": 13402,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
